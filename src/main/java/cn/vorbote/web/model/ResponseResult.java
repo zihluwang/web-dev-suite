@@ -2,6 +2,7 @@ package cn.vorbote.web.model;
 
 import cn.vorbote.time.DateTime;
 import cn.vorbote.web.dictionary.StatusDict;
+import lombok.*;
 
 /**
  * Response model for response body.
@@ -9,6 +10,11 @@ import cn.vorbote.web.dictionary.StatusDict;
  * @param <T> The type of the result.
  * @author vorbote
  */
+@Data
+@Builder
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
 public final class ResponseResult<T> {
 
     private int status;
@@ -107,9 +113,6 @@ public final class ResponseResult<T> {
         this.exception = exception;
     }
 
-    /**
-     * Build a Response model.
-     */
     public ResponseResult() {
         this.timestamp = DateTime.Now().Unix();
         this.status = StatusDict.OK;
