@@ -12,7 +12,7 @@
 
     <groupId>cn.vorbote</groupId>
     <artifactId>web-dev-suite</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.1.RELEASE</version>
     <url>https://plugins.vorbote.cn/</url>
 
     <name>VorBotE :: Web Development Suite</name>
