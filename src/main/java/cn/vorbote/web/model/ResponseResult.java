@@ -1,7 +1,7 @@
 package cn.vorbote.web.model;
 
+import cn.vorbote.commons.consts.WebStatus;
 import cn.vorbote.time.DateTime;
-import cn.vorbote.web.dictionary.StatusDict;
 import lombok.*;
 
 /**
@@ -11,7 +11,6 @@ import lombok.*;
  * @author vorbote
  */
 @Data
-@Builder
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -36,9 +35,11 @@ public final class ResponseResult<T> {
      * Set the data of status.
      *
      * @param status The status.
+     * @return The instance itself.
      */
-    public void Status(int status) {
+    public ResponseResult<T> Status(int status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -54,9 +55,11 @@ public final class ResponseResult<T> {
      * Set the data of result.
      *
      * @param result The result.
+     * @return The instance itself.
      */
-    public void Result(T result) {
+    public ResponseResult<T> Result(T result) {
         this.result = result;
+        return this;
     }
 
     /**
@@ -72,9 +75,11 @@ public final class ResponseResult<T> {
      * Set the data of timestamp.
      *
      * @param timestamp The timestamp.
+     * @return The instance itself.
      */
-    public void Timestamp(long timestamp) {
+    public ResponseResult<T> Timestamp(long timestamp) {
         this.timestamp = timestamp;
+        return this;
     }
 
     /**
@@ -90,9 +95,11 @@ public final class ResponseResult<T> {
      * Set the data of message.
      *
      * @param message The message.
+     * @return The instance itself.
      */
-    public void Message(String message) {
+    public ResponseResult<T> Message(String message) {
         this.message = message;
+        return this;
     }
 
     /**
@@ -108,13 +115,15 @@ public final class ResponseResult<T> {
      * Set the data of exception.
      *
      * @param exception The exception.
+     * @return The instance itself.
      */
-    public void Exception(String exception) {
+    public ResponseResult<T> Exception(String exception) {
         this.exception = exception;
+        return this;
     }
 
     public ResponseResult() {
         this.timestamp = DateTime.Now().Unix();
-        this.status = StatusDict.OK;
+        this.status = WebStatus.OK;
     }
 }

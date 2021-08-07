@@ -12,7 +12,7 @@
 
     <groupId>cn.vorbote</groupId>
     <artifactId>web-dev-suite</artifactId>
-    <version>1.0.1.RELEASE</version>
+    <version>${project.version}</version>
     <url>https://plugins.vorbote.cn/</url>
 
     <name>VorBotE :: Web Development Suite</name>
@@ -20,58 +20,38 @@
         This Suite is made for importing in-organization libs.
     </description>
 
-    <dependencies>
-        <dependency>
-            <groupId>cn.vorbote</groupId>
-            <artifactId>commons</artifactId>
-            <version>1.5.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.vorbote</groupId>
-            <artifactId>time-lib</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.vorbote</groupId>
-            <artifactId>simple-jwt</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
-        </dependency>
-    </dependencies>
-    <packaging>jar</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.compilerVersion>11</maven.compiler.compilerVersion>
+        <project.version>2.0.0.RELEASE</project.version>
+        <commons.version>2.0.0.RELEASE</commons.version>
+        <time-lib.version>2.0.0.RELEASE</time-lib.version>
+        <simple-jwt.version>2.0.0.RELEASE</simple-jwt.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.vorbote</groupId>
+            <artifactId>commons</artifactId>
+            <version>${commons.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.vorbote</groupId>
+            <artifactId>time-lib</artifactId>
+            <version>${time-lib.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.vorbote</groupId>
+            <artifactId>simple-jwt</artifactId>
+            <version>${simple-jwt.version}</version>
+        </dependency>
+    </dependencies>
+    <packaging>jar</packaging>
 
     <licenses>
         <license>
