@@ -11,6 +11,7 @@ import lombok.*;
  * @author vorbote
  */
 @Data
+@Builder
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
