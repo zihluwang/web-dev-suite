@@ -26,10 +26,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.compilerVersion>11</maven.compiler.compilerVersion>
-        <project.version>2.0.1.RELEASE</project.version>
+        <project.version>2.0.2.RELEASE</project.version>
         <commons.version>2.0.0.RELEASE</commons.version>
         <time-lib.version>2.0.0.RELEASE</time-lib.version>
-        <simple-jwt.version>2.0.0.RELEASE</simple-jwt.version>
+        <simple-jwt.version>2.0.1.RELEASE</simple-jwt.version>
     </properties>
 
     <dependencies>
