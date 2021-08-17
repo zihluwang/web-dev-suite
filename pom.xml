@@ -21,15 +21,18 @@
     </description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.compilerVersion>11</maven.compiler.compilerVersion>
+
+        <!--由cn.vorbote开发的依赖-->
         <project.version>2.0.2.RELEASE</project.version>
         <commons.version>2.0.0.RELEASE</commons.version>
         <time-lib.version>2.0.0.RELEASE</time-lib.version>
-        <simple-jwt.version>2.0.1.RELEASE</simple-jwt.version>
+        <commons-utils.version>2.0.1.RELEASE</commons-utils.version>
+        <simple-jwt.version>2.0.2.RELEASE</simple-jwt.version>
     </properties>
 
     <dependencies>
@@ -47,10 +50,17 @@
 
         <dependency>
             <groupId>cn.vorbote</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${commons-utils.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.vorbote</groupId>
             <artifactId>simple-jwt</artifactId>
             <version>${simple-jwt.version}</version>
         </dependency>
     </dependencies>
+
     <packaging>jar</packaging>
 
     <licenses>
