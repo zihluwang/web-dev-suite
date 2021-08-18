@@ -30,7 +30,7 @@
         <!--由cn.vorbote开发的依赖-->
         <project.version>2.0.3.RELEASE</project.version>
         <commons.version>2.0.2.RELEASE</commons.version>
-        <time-lib.version>2.0.0.RELEASE</time-lib.version>
+        <time-lib.version>2.0.2.RELEASE</time-lib.version>
         <commons-utils.version>2.0.1.RELEASE</commons-utils.version>
         <simple-jwt.version>2.0.3.RELEASE</simple-jwt.version>
     </properties>
