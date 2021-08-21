@@ -28,36 +28,32 @@
         <maven.compiler.compilerVersion>11</maven.compiler.compilerVersion>
 
         <!--由cn.vorbote开发的依赖-->
-        <project.version>2.0.3.RELEASE</project.version>
-        <commons.version>2.0.2.RELEASE</commons.version>
-        <time-lib.version>2.0.2.RELEASE</time-lib.version>
-        <commons-utils.version>2.0.1.RELEASE</commons-utils.version>
-        <simple-jwt.version>2.0.3.RELEASE</simple-jwt.version>
+        <project.version>2.0.4.RELEASE</project.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.vorbote</groupId>
             <artifactId>commons</artifactId>
-            <version>${commons.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.vorbote</groupId>
             <artifactId>time-lib</artifactId>
-            <version>${time-lib.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.vorbote</groupId>
             <artifactId>common-utils</artifactId>
-            <version>${commons-utils.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.vorbote</groupId>
             <artifactId>simple-jwt</artifactId>
-            <version>${simple-jwt.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

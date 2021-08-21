@@ -8,20 +8,19 @@ import lombok.*;
  * Response model for response body.
  *
  * @param <T> The type of the result.
- * @author vorbote
+ * @author vorbote thills@vorbote.cn
  */
 @Data
-@Builder
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public final class ResponseResult<T> {
 
-    private int status;
-    private T result;
-    private long timestamp;
-    private String message;
-    private String exception;
+    protected int status;
+    protected T result;
+    protected long timestamp = DateTime.Now().Unix();
+    protected String message;
+    protected String exception;
 
     /**
      * Get the data of status.
@@ -123,8 +122,112 @@ public final class ResponseResult<T> {
         return this;
     }
 
+    /**
+     * Generate a new Response Result instance.
+     */
     public ResponseResult() {
         this.timestamp = DateTime.Now().Unix();
         this.status = WebStatus.OK;
     }
+
+
+
+    /**
+     * A Response result builder.
+     *
+     * @param <T> The data will be stored.
+     */
+    public static class ResponseResultBuilder<T> {
+        protected int status;
+        protected T result;
+        protected long timestamp;
+        protected String message;
+        protected String exception;
+
+        /**
+         * Set the status.
+         *
+         * @param status The status code, recommended to use the data in {@code cn.vorbote.commons.WebStatus}.
+         * @return The builder itself.
+         */
+        public ResponseResultBuilder<T> status(int status) {
+            this.status = status;
+            return this;
+        }
+
+        /**
+         * Set the result.
+         *
+         * @param result The result.
+         * @return The builder itself.
+         */
+        public ResponseResultBuilder<T> result(T result) {
+            this.result = result;
+            return this;
+        }
+
+        /**
+         * Set the timestamp.
+         *
+         * @param timestamp The timestamp.
+         * @return The builder itself.
+         */
+        public ResponseResultBuilder<T> timestamp(long timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        /**
+         * Set the message.
+         *
+         * @param message The message.
+         * @return The builder itself.
+         */
+        public ResponseResultBuilder<T> message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        /**
+         * Set the exception.
+         *
+         * @param exception The exception.
+         * @return The builder itself.
+         */
+        public ResponseResultBuilder<T> exception(String exception) {
+            this.exception = exception;
+            return this;
+        }
+
+        /**
+         * Build a response result.
+         *
+         * @return A response result.
+         */
+        public ResponseResult<T> build() {
+            var response = new ResponseResult<T>();
+            response.Exception(this.exception)
+                    .Result(this.result)
+                    .Message(this.message);
+            if (this.status != 0 && this.status != 200) {
+                response.Status(this.status);
+            }
+            if (this.timestamp != 0 && this.timestamp != DateTime.Now().Unix()) {
+                response.Timestamp(this.timestamp);
+            }
+
+            return response;
+        }
+    }
+
+    /**
+     * Get a builder for response result.
+     *
+     * @param <T> The type to store.
+     * @return A new builder.
+     */
+    public static <T> ResponseResultBuilder<T> builder() {
+        return new ResponseResultBuilder<>();
+    }
+
 }
