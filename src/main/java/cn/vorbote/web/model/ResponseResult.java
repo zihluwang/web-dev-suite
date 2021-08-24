@@ -1,5 +1,6 @@
 package cn.vorbote.web.model;
 
+import cn.vorbote.common.utils.StringUtil;
 import cn.vorbote.commons.consts.WebStatus;
 import cn.vorbote.time.DateTime;
 import lombok.*;
@@ -16,8 +17,8 @@ import lombok.*;
 @AllArgsConstructor
 public final class ResponseResult<T> {
 
-    protected int status;
-    protected T result;
+    protected int code;
+    protected T data;
     protected long timestamp = DateTime.Now().Unix();
     protected String message;
     protected String exception;
@@ -27,18 +28,18 @@ public final class ResponseResult<T> {
      *
      * @return The status.
      */
-    public int Status() {
-        return status;
+    public int Code() {
+        return code;
     }
 
     /**
      * Set the data of status.
      *
-     * @param status The status.
+     * @param code The status.
      * @return The instance itself.
      */
-    public ResponseResult<T> Status(int status) {
-        this.status = status;
+    public ResponseResult<T> Code(int code) {
+        this.code = code;
         return this;
     }
 
@@ -47,18 +48,18 @@ public final class ResponseResult<T> {
      *
      * @return The result.
      */
-    public T Result() {
-        return result;
+    public T Data() {
+        return data;
     }
 
     /**
      * Set the data of result.
      *
-     * @param result The result.
+     * @param data The result.
      * @return The instance itself.
      */
-    public ResponseResult<T> Result(T result) {
-        this.result = result;
+    public ResponseResult<T> Data(T data) {
+        this.data = data;
         return this;
     }
 
@@ -103,6 +104,19 @@ public final class ResponseResult<T> {
     }
 
     /**
+     * Set the data of message.
+     *
+     * @param format The format message.
+     * @param args   The args to be put into the message.
+     * @return The instance itself.
+     * @see cn.vorbote.common.utils.StringUtil#Format(String, Object...)
+     */
+    public ResponseResult<T> Message(String format, Object... args) {
+        this.message = StringUtil.Format(format, args);
+        return this;
+    }
+
+    /**
      * Get the data of exception.
      *
      * @return The exception.
@@ -123,13 +137,24 @@ public final class ResponseResult<T> {
     }
 
     /**
+     * Set the data of exception.
+     *
+     * @param format The format message.
+     * @param args   The args to be put into the message.
+     * @return The instance itself.
+     */
+    public ResponseResult<T> Exception(String format, Object... args) {
+        this.exception = StringUtil.Format(format, args);
+        return this;
+    }
+
+    /**
      * Generate a new Response Result instance.
      */
     public ResponseResult() {
         this.timestamp = DateTime.Now().Unix();
-        this.status = WebStatus.OK;
+        this.code = WebStatus.OK;
     }
-
 
 
     /**
@@ -138,8 +163,8 @@ public final class ResponseResult<T> {
      * @param <T> The data will be stored.
      */
     public static class ResponseResultBuilder<T> {
-        protected int status;
-        protected T result;
+        protected int code;
+        protected T data;
         protected long timestamp;
         protected String message;
         protected String exception;
@@ -147,22 +172,22 @@ public final class ResponseResult<T> {
         /**
          * Set the status.
          *
-         * @param status The status code, recommended to use the data in {@code cn.vorbote.commons.WebStatus}.
+         * @param code The status code, recommended to use the data in {@code cn.vorbote.commons.WebStatus}.
          * @return The builder itself.
          */
-        public ResponseResultBuilder<T> status(int status) {
-            this.status = status;
+        public ResponseResultBuilder<T> code(int code) {
+            this.code = code;
             return this;
         }
 
         /**
          * Set the result.
          *
-         * @param result The result.
+         * @param data The result.
          * @return The builder itself.
          */
-        public ResponseResultBuilder<T> result(T result) {
-            this.result = result;
+        public ResponseResultBuilder<T> data(T data) {
+            this.data = data;
             return this;
         }
 
@@ -207,10 +232,10 @@ public final class ResponseResult<T> {
         public ResponseResult<T> build() {
             var response = new ResponseResult<T>();
             response.Exception(this.exception)
-                    .Result(this.result)
+                    .Data(this.data)
                     .Message(this.message);
-            if (this.status != 0 && this.status != 200) {
-                response.Status(this.status);
+            if (this.code != 0 && this.code != 200) {
+                response.Code(this.code);
             }
             if (this.timestamp != 0 && this.timestamp != DateTime.Now().Unix()) {
                 response.Timestamp(this.timestamp);
