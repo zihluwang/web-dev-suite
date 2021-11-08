@@ -3,7 +3,10 @@ package cn.vorbote.web.model;
 import cn.vorbote.common.utils.StringUtil;
 import cn.vorbote.commons.consts.WebStatus;
 import cn.vorbote.time.DateTime;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Response model for response body.
@@ -17,11 +20,11 @@ import lombok.*;
 @AllArgsConstructor
 public final class ResponseResult<T> {
 
-    protected int code;
-    protected T data;
-    protected long timestamp = DateTime.Now().Unix();
-    protected String message;
-    protected String exception;
+    private int code;
+    private T data;
+    private long timestamp;
+    private String message;
+    private String exception;
 
     /**
      * Get the data of status.
@@ -153,106 +156,107 @@ public final class ResponseResult<T> {
      */
     public ResponseResult() {
         this.timestamp = DateTime.Now().Unix();
-        this.code = WebStatus.OK;
-    }
-
-
-    /**
-     * A Response result builder.
-     *
-     * @param <T> The data will be stored.
-     */
-    public static class ResponseResultBuilder<T> {
-        protected int code;
-        protected T data;
-        protected long timestamp;
-        protected String message;
-        protected String exception;
-
-        /**
-         * Set the status.
-         *
-         * @param code The status code, recommended to use the data in {@code cn.vorbote.commons.WebStatus}.
-         * @return The builder itself.
-         */
-        public ResponseResultBuilder<T> code(int code) {
-            this.code = code;
-            return this;
-        }
-
-        /**
-         * Set the result.
-         *
-         * @param data The result.
-         * @return The builder itself.
-         */
-        public ResponseResultBuilder<T> data(T data) {
-            this.data = data;
-            return this;
-        }
-
-        /**
-         * Set the timestamp.
-         *
-         * @param timestamp The timestamp.
-         * @return The builder itself.
-         */
-        public ResponseResultBuilder<T> timestamp(long timestamp) {
-            this.timestamp = timestamp;
-            return this;
-        }
-
-        /**
-         * Set the message.
-         *
-         * @param message The message.
-         * @return The builder itself.
-         */
-        public ResponseResultBuilder<T> message(String message) {
-            this.message = message;
-            return this;
-        }
-
-        /**
-         * Set the exception.
-         *
-         * @param exception The exception.
-         * @return The builder itself.
-         */
-        public ResponseResultBuilder<T> exception(String exception) {
-            this.exception = exception;
-            return this;
-        }
-
-        /**
-         * Build a response result.
-         *
-         * @return A response result.
-         */
-        public ResponseResult<T> build() {
-            var response = new ResponseResult<T>();
-            response.Exception(this.exception)
-                    .Data(this.data)
-                    .Message(this.message);
-            if (this.code != 0 && this.code != 200) {
-                response.Code(this.code);
-            }
-            if (this.timestamp != 0 && this.timestamp != DateTime.Now().Unix()) {
-                response.Timestamp(this.timestamp);
-            }
-
-            return response;
-        }
     }
 
     /**
-     * Get a builder for response result.
+     * Generate a new Response Result instance with a success status.
      *
-     * @param <T> The type to store.
-     * @return A new builder.
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
      */
-    public static <T> ResponseResultBuilder<T> builder() {
-        return new ResponseResultBuilder<>();
+    public static <T> ResponseResult<T> success(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.message = message;
+        return result;
     }
 
+    /**
+     * Generate a new Response Result instance with a timeout status.
+     *
+     * @param message   The message.
+     * @param exception The exception.
+     * @param <T>       The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> timeout(String message, String exception) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.GATEWAY_TIMEOUT;
+        result.message = message;
+        result.exception = exception;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a timeout status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> timeout(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.GATEWAY_TIMEOUT;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with an error status.
+     *
+     * @param message   The message.
+     * @param exception The exception.
+     * @param <T>       The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> error(String message, String exception) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.INTERNAL_SERVER_ERROR;
+        result.message = message;
+        result.exception = exception;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with an error status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> error(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.INTERNAL_SERVER_ERROR;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with an unauthorized status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> unauthorized(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.UNAUTHORIZED;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a forbidden status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> forbidden(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.FORBIDDEN;
+        result.message = message;
+        return result;
+    }
 }
