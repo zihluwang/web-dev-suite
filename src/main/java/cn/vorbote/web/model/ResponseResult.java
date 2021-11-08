@@ -161,6 +161,20 @@ public final class ResponseResult<T> {
     /**
      * Generate a new Response Result instance with a success status.
      *
+     * @param data The data.
+     * @param <T>  The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> success(T data) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.data = data;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a success status.
+     *
      * @param message The message.
      * @param <T>     The type of the result.
      * @return The instance itself.
@@ -168,6 +182,22 @@ public final class ResponseResult<T> {
     public static <T> ResponseResult<T> success(String message) {
         var result = new ResponseResult<T>();
         result.code = WebStatus.OK;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a success status.
+     *
+     * @param data    The data.
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> success(T data, String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.data = data;
         result.message = message;
         return result;
     }
