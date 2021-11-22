@@ -175,11 +175,39 @@ public final class ResponseResult<T> {
     /**
      * Generate a new Response Result instance with a success status.
      *
+     * @param data The data.
+     * @param <T>  The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Success(T data) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.data = data;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a success status.
+     *
      * @param message The message.
      * @param <T>     The type of the result.
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a success status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Success(String message) {
         var result = new ResponseResult<T>();
         result.code = WebStatus.OK;
         result.message = message;
@@ -203,6 +231,22 @@ public final class ResponseResult<T> {
     }
 
     /**
+     * Generate a new Response Result instance with a success status.
+     *
+     * @param data    The data.
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Success(T data, String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.OK;
+        result.data = data;
+        result.message = message;
+        return result;
+    }
+
+    /**
      * Generate a new Response Result instance with a timeout status.
      *
      * @param message   The message.
@@ -212,7 +256,23 @@ public final class ResponseResult<T> {
      */
     public static <T> ResponseResult<T> timeout(String message, String exception) {
         var result = new ResponseResult<T>();
-        result.code = WebStatus.GATEWAY_TIMEOUT;
+        result.code = WebStatus.REQUEST_TIMEOUT;
+        result.message = message;
+        result.exception = exception;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a timeout status.
+     *
+     * @param message   The message.
+     * @param exception The exception.
+     * @param <T>       The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Timeout(String message, String exception) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.REQUEST_TIMEOUT;
         result.message = message;
         result.exception = exception;
         return result;
@@ -227,7 +287,21 @@ public final class ResponseResult<T> {
      */
     public static <T> ResponseResult<T> timeout(String message) {
         var result = new ResponseResult<T>();
-        result.code = WebStatus.GATEWAY_TIMEOUT;
+        result.code = WebStatus.REQUEST_TIMEOUT;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a timeout status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Timeout(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.REQUEST_TIMEOUT;
         result.message = message;
         return result;
     }
@@ -251,11 +325,41 @@ public final class ResponseResult<T> {
     /**
      * Generate a new Response Result instance with an error status.
      *
+     * @param message   The message.
+     * @param exception The exception.
+     * @param <T>       The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Error(String message, String exception) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.INTERNAL_SERVER_ERROR;
+        result.message = message;
+        result.exception = exception;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with an error status.
+     *
      * @param message The message.
      * @param <T>     The type of the result.
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> error(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.INTERNAL_SERVER_ERROR;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with an error status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Error(String message) {
         var result = new ResponseResult<T>();
         result.code = WebStatus.INTERNAL_SERVER_ERROR;
         result.message = message;
@@ -277,6 +381,20 @@ public final class ResponseResult<T> {
     }
 
     /**
+     * Generate a new Response Result instance with an unauthorized status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Unauthorized(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.UNAUTHORIZED;
+        result.message = message;
+        return result;
+    }
+
+    /**
      * Generate a new Response Result instance with a forbidden status.
      *
      * @param message The message.
@@ -284,6 +402,20 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> forbidden(String message) {
+        var result = new ResponseResult<T>();
+        result.code = WebStatus.FORBIDDEN;
+        result.message = message;
+        return result;
+    }
+
+    /**
+     * Generate a new Response Result instance with a forbidden status.
+     *
+     * @param message The message.
+     * @param <T>     The type of the result.
+     * @return The instance itself.
+     */
+    public static <T> ResponseResult<T> Forbidden(String message) {
         var result = new ResponseResult<T>();
         result.code = WebStatus.FORBIDDEN;
         result.message = message;
