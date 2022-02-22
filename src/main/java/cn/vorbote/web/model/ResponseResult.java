@@ -1,8 +1,8 @@
 package cn.vorbote.web.model;
 
 import cn.vorbote.common.utils.StringUtil;
-import cn.vorbote.commons.consts.WebStatus;
 import cn.vorbote.time.DateTime;
+import cn.vorbote.web.constants.WebStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
