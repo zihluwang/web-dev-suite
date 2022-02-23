@@ -1,6 +1,6 @@
 package cn.vorbote.web.utils;
 
-import cn.vorbote.core.util.StringUtil;
+import cn.vorbote.core.utils.StringUtil;
 import cn.vorbote.web.constants.WebStatus;
 import cn.vorbote.web.exceptions.BizException;
 
