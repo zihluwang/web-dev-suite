@@ -1,6 +1,6 @@
 package cn.vorbote.web.utils;
 
-import cn.vorbote.common.utils.StringUtil;
+import cn.vorbote.core.util.StringUtil;
 import cn.vorbote.web.constants.WebStatus;
 import cn.vorbote.web.exceptions.BizException;
 
@@ -27,8 +27,8 @@ public final class BizAssert {
      * <pre class="code">BizAssert.doesNotContain(name, "rod", "Name must not contain \"rod\".");</pre>
      *
      * @param textToSearch The text to search.
-     * @param substring The substring to find within the text.
-     * @param message The exception message to use if the assertion fails.
+     * @param substring    The substring to find within the text.
+     * @param message      The exception message to use if the assertion fails.
      * @throws BizException If the text contains the substring.
      */
     public static void doesNotContain(String textToSearch, String substring, String message) throws BizException {
@@ -43,8 +43,8 @@ public final class BizAssert {
      * BizAssert.doesNotContain(name, forbidden, () -> "Name must not contain  ");
      * </pre>
      *
-     * @param textToSearch The text to search.
-     * @param substring The substring to find within the text.
+     * @param textToSearch    The text to search.
+     * @param substring       The substring to find within the text.
      * @param messageSupplier The exception message to use if the assertion fails.
      * @throws BizException If the text contains the substring.
      */
@@ -67,11 +67,15 @@ public final class BizAssert {
     }
 
     public static void hasText(String text, String message) {
-
+        if (!StringUtil.hasText(text)) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void hasText(String text, Supplier<String> messageSupplier) {
-
+        if (!StringUtil.hasText(text)) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void isAssignable(Class<?> superType, Class<?> subType, String message) {
@@ -91,19 +95,27 @@ public final class BizAssert {
     }
 
     public static void isNull(Object object, String message) {
-
+        if (object != null) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void isNull(Object object, Supplier<String> messageSupplier) {
-
+        if (object != null) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void isTrue(boolean expression, String message) {
-
+        if (!expression) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void isTrue(boolean expression, Supplier<String> messageSupplier) {
-
+        if (!expression) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void noNullElements(Collection<?> collection, String message) {
@@ -139,27 +151,39 @@ public final class BizAssert {
     }
 
     public static void notEmpty(Object[] array, String message) {
-
+        if (array == null || array.length == 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void notEmpty(Object[] array, Supplier<String> messageSupplier) {
-
+        if (array == null || array.length == 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void notNull(Object object, String message) {
-
+        if (object == null) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void notNull(Object object, Supplier<String> messageSupplier) {
-
+        if (object == null) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void state(boolean expression, String message) {
-
+        if (!expression) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void state(boolean expression, Supplier<String> messageSupplier) {
-
+        if (!expression) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     private static boolean endsWithSeparator(String message) {
