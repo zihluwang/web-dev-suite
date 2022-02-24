@@ -39,9 +39,6 @@ public final class BizAssert {
 
     /**
      * Assert that the given text does not contain the given substring.
-     * <pre class="code">
-     * BizAssert.doesNotContain(name, forbidden, () -> "Name must not contain  ");
-     * </pre>
      *
      * @param textToSearch    The text to search.
      * @param substring       The substring to find within the text.
@@ -79,19 +76,31 @@ public final class BizAssert {
     }
 
     public static void isAssignable(Class<?> superType, Class<?> subType, String message) {
-
+        notNull(superType, "Super type to check against must not be null.");
+        if (subType == null || !superType.isAssignableFrom(subType)) {
+            assignableCheckFailed(superType, subType, message);
+        }
     }
 
     public static void isAssignable(Class<?> superType, Class<?> subType, Supplier<String> messageSupplier) {
-
+        notNull(superType, "Super type to check against must not be null.");
+        if (subType == null || !superType.isAssignableFrom(subType)) {
+            assignableCheckFailed(superType, subType, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void isInstanceOf(Class<?> type, Object object, String message) {
-
+        notNull(type, "Type to check against must not be null.");
+        if (!type.isInstance(object)) {
+            instanceCheckFailed(type, object, message);
+        }
     }
 
     public static void isInstanceOf(Class<?> type, Object object, Supplier<String> messageSupplier) {
-
+        notNull(type, "Type to check against must not be null.");
+        if (!type.isInstance(object)) {
+            instanceCheckFailed(type, object, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void isNull(Object object, String message) {
@@ -119,35 +128,67 @@ public final class BizAssert {
     }
 
     public static void noNullElements(Collection<?> collection, String message) {
-
+        if (collection != null) {
+            collection.forEach((item) -> {
+                if (item == null) {
+                    throw new BizException(WebStatus.BAD_REQUEST, message);
+                }
+            });
+        }
     }
 
     public static void noNullElements(Collection<?> collection, Supplier<String> messageSupplier) {
-
+        if (collection != null) {
+            collection.forEach((item) -> {
+                if (item == null) {
+                    throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+                }
+            });
+        }
     }
 
     public static void noNullElements(Object[] array, String message) {
-
+        if (array != null) {
+            for (var element : array) {
+                if (element == null) {
+                    throw new BizException(WebStatus.BAD_REQUEST, message);
+                }
+            }
+        }
     }
 
     public static void noNullElements(Object[] array, Supplier<String> messageSupplier) {
-
+        if (array != null) {
+            for (var element : array) {
+                if (element == null) {
+                    throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+                }
+            }
+        }
     }
 
     public static void notEmpty(Collection<?> collection, String message) {
-
+        if (collection == null || collection.size() > 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void notEmpty(Collection<?> collection, Supplier<String> messageSupplier) {
-
+        if (collection == null || collection.size() == 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void notEmpty(Map<?, ?> map, String message) {
-
+        if (map == null || map.size() == 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, message);
+        }
     }
 
     public static void notEmpty(Map<?, ?> map, Supplier<String> messageSupplier) {
-
+        if (map == null || map.size() == 0) {
+            throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
+        }
     }
 
     public static void notEmpty(Object[] array, String message) {
