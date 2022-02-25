@@ -52,7 +52,7 @@ public class BizException extends RuntimeException {
      * @return A converted response result entity.
      */
     public ResponseResult<Object> respond() {
-        return ResponseResult.error(this.getMessage()).Code(this.getCode());
+        return ResponseResult.error(this.getMessage()).code(this.getCode());
     }
 
 }
