@@ -12,7 +12,7 @@ which can be easily configured. During the development process, we can often enc
 request of the browser. Therefore, through this filter, response data will be added some response headers that allow 
 browsers to pass cross-origin request checks.
 
-> The library is now in **_ALPHA_** test, if you could want to help us to test, you could clone this library and use 
+> The library is now in **_ALPHA_** test, if you want to help us to test, you could clone this library and use 
 > **maven** or **gradle** to build it to your local repository. If you found any bugs or have any question while using 
 > it, please do not hesitate to contact us by submitting an **issue** with the situation you met. If you are able to
 > fix or improve that problem on your own, we are also welcome your **Pull Request**.
