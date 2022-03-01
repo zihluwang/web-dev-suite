@@ -1,4 +1,4 @@
-## OpenSource Core
+## Web Dev Suite
 
 > You could also read the **CHINESE** version of [README](README_zh-CN.md)
 

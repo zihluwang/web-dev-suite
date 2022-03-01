@@ -1,4 +1,4 @@
-## Open Source Core
+## Web Dev Suite
 
 这是一个以 `RESTful` 接口为概念而创建的类库。该类库中的 `ResponseResult<T>` 可以规范您的 `JSON` 响应内容。其次，该类库还封装了常用的 
 Web 响应代码，例如表示成功的 200 (OK)等。
