@@ -127,7 +127,7 @@ public class CorsFilter implements Filter {
                 builder.append(item).append(",");
             }
         }
-        return builder.substring(0, builder.length() - 1);
+        return builder.length() != 0 ? builder.substring(0, builder.length() - 1) : "";
     }
 
     /**
