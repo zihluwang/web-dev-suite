@@ -307,7 +307,7 @@ public final class BizAssert {
      * @throws BizException If the collection is null or contains no elements.
      */
     public static void notEmpty(Collection<?> collection, String message) {
-        if (collection == null || collection.size() > 0) {
+        if (collection == null || collection.size() == 0) {
             throw new BizException(WebStatus.BAD_REQUEST, message);
         }
     }
