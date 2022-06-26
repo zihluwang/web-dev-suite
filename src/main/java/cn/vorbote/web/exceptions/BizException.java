@@ -7,7 +7,7 @@ import cn.vorbote.web.model.ResponseResult;
  * used to solve that Spring Framework throws <code>java.lang.IllegalArgumentException</code> while its assertion fails.<br>
  * Created at 2022/2/22 22:22
  *
- * @author vorbote theodore0126@outlook.com
+ * @author vorbote
  */
 public class BizException extends RuntimeException {
 
@@ -51,7 +51,7 @@ public class BizException extends RuntimeException {
      *
      * @return A converted response result entity.
      */
-    public ResponseResult<Object> respond() {
+    public ResponseResult<?> respond() {
         return ResponseResult.error(this.getMessage()).code(this.getCode());
     }
 
