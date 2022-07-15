@@ -135,7 +135,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(T data) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.OK;
         result.data = data;
         return result;
@@ -149,7 +149,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.OK;
         result.message = message;
         return result;
@@ -163,7 +163,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.OK;
         result.message = messageSupplier.get();
         return result;
@@ -178,7 +178,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(T data, String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.OK;
         result.data = data;
         result.message = message;
@@ -194,7 +194,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> success(T data, Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.OK;
         result.data = data;
         result.message = messageSupplier.get();
@@ -209,7 +209,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> timeout(Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.REQUEST_TIMEOUT;
         result.message = messageSupplier.get();
         return result;
@@ -223,7 +223,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> timeout(String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.REQUEST_TIMEOUT;
         result.message = message;
         return result;
@@ -237,7 +237,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> error(Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.INTERNAL_SERVER_ERROR;
         result.message = messageSupplier.get();
         return result;
@@ -251,7 +251,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> error(String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.INTERNAL_SERVER_ERROR;
         result.message = message;
         return result;
@@ -265,7 +265,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> unauthorized(String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.UNAUTHORIZED;
         result.message = message;
         return result;
@@ -279,7 +279,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> unauthorized(Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.UNAUTHORIZED;
         result.message = messageSupplier.get();
         return result;
@@ -293,7 +293,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> forbidden(String message) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.FORBIDDEN;
         result.message = message;
         return result;
@@ -307,7 +307,7 @@ public final class ResponseResult<T> {
      * @return The instance itself.
      */
     public static <T> ResponseResult<T> forbidden(Supplier<String> messageSupplier) {
-        var result = new ResponseResult<T>();
+        ResponseResult<T> result = new ResponseResult<>();
         result.code = WebStatus.FORBIDDEN;
         result.message = messageSupplier.get();
         return result;

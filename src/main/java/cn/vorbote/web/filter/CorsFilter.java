@@ -121,9 +121,9 @@ public class CorsFilter implements Filter {
      * @return A {@code String} with the format of MDN specified header value.
      */
     protected static String fromArray(String[] array) {
-        var builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         if (array != null && array.length > 0) {
-            for (var item : array) {
+            for (String item : array) {
                 builder.append(item).append(",");
             }
         }
@@ -140,8 +140,8 @@ public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         // Transform original ServletXxx instances to HttpServletXxx instances.
-        var request = (HttpServletRequest) servletRequest;
-        var response = (HttpServletResponse) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         // Handle CORS problem.
         response.addHeader("Access-Control-Allow-Credentials", String.valueOf(isAllowCredentials()));

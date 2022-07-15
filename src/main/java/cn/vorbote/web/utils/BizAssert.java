@@ -32,7 +32,7 @@ public final class BizAssert {
      * @throws BizException If the text contains the substring.
      */
     public static void doesNotContain(String textToSearch, String substring, String message) throws BizException {
-        if (!textToSearch.isBlank() && textToSearch.contains(substring)) {
+        if (!StringUtil.isBlank(textToSearch) && textToSearch.contains(substring)) {
             throw new BizException(WebStatus.BAD_REQUEST, message);
         }
     }
@@ -46,7 +46,7 @@ public final class BizAssert {
      * @throws BizException If the text contains the substring.
      */
     public static void doesNotContain(String textToSearch, String substring, Supplier<String> messageSupplier) {
-        if (!textToSearch.isBlank() && textToSearch.contains(substring)) {
+        if (!StringUtil.isBlank(textToSearch) && textToSearch.contains(substring)) {
             throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
         }
     }
@@ -272,7 +272,7 @@ public final class BizAssert {
      */
     public static void noNullElements(Object[] array, String message) {
         if (array != null) {
-            for (var element : array) {
+            for (Object element : array) {
                 if (element == null) {
                     throw new BizException(WebStatus.BAD_REQUEST, message);
                 }
@@ -290,7 +290,7 @@ public final class BizAssert {
      */
     public static void noNullElements(Object[] array, Supplier<String> messageSupplier) {
         if (array != null) {
-            for (var element : array) {
+            for (Object element : array) {
                 if (element == null) {
                     throw new BizException(WebStatus.BAD_REQUEST, getMessageFromSupplier(messageSupplier));
                 }
@@ -467,11 +467,11 @@ public final class BizAssert {
      * @param message The message to show.
      */
     private static void instanceCheckFailed(Class<?> type, Object obj, String message) {
-        var className = (obj != null ? obj.getClass().getName() : "null");
-        var result = "";
-        var defaultMessage = true;
+        String className = (obj != null ? obj.getClass().getName() : "null");
+        String result = "";
+        boolean defaultMessage = true;
 
-        if (!message.isBlank()) {
+        if (!StringUtil.isBlank(message)) {
             if (endsWithSeparator(message)) {
                 result = message + " ";
             } else {
@@ -496,9 +496,9 @@ public final class BizAssert {
      * @param message   The message to show.
      */
     private static void assignableCheckFailed(Class<?> superType, Class<?> subType, String message) {
-        var result = "";
-        var defaultMessage = true;
-        if (!message.isBlank()) {
+        String result = "";
+        boolean defaultMessage = true;
+        if (!StringUtil.isBlank(message)) {
             if (endsWithSeparator(message)) {
                 result = message + " ";
             } else {

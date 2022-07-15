@@ -45,8 +45,8 @@ public class CharacterEncodingFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        var request = (HttpServletRequest) servletRequest;
-        var response = (HttpServletResponse) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         request.setCharacterEncoding(requestEncoding);
         response.setCharacterEncoding(responseEncoding);
