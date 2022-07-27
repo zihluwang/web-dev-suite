@@ -1,5 +1,7 @@
 package cn.vorbote.web.filter;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import java.io.IOException;
  *
  * @author vorbote
  */
+@Slf4j
 public class CorsFilter implements Filter {
 
     /**
@@ -160,5 +163,15 @@ public class CorsFilter implements Filter {
 
         // 已经更改完成，请求被放行
         chain.doFilter(request, response);
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        log.info("CorsFilter initialized...");
+    }
+
+    @Override
+    public void destroy() {
+        log.info("CorsFilter destroyed...");
     }
 }
