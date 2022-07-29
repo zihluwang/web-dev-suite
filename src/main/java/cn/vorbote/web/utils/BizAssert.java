@@ -6,6 +6,7 @@ import cn.vorbote.web.exceptions.BizException;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -521,7 +522,8 @@ public final class BizAssert {
      * @return The message from the supplier or {@code null} when the supplier is null.
      */
     private static String getMessageFromSupplier(Supplier<String> messageSupplier) {
-        return (messageSupplier != null) ? messageSupplier.get() : null;
+        return Optional.ofNullable(messageSupplier)
+                .map(Supplier::get).orElse("");
     }
 
 }

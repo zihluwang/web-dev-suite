@@ -35,6 +35,7 @@
 
         <!--由cn.vorbote开发的依赖-->
         <project.version>3.3.1</project.version>
+        <web.dev.version>3.3.1.jakarta</web.dev.version>
     </properties>
 
     <parent>
@@ -60,12 +61,10 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
-            <scope>provided</scope>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
         </dependency>
 
     </dependencies>

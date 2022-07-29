@@ -1,8 +1,10 @@
 package cn.vorbote.web.filter;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
  *
  * @author vorbote
  */
+@Slf4j
 public class CharacterEncodingFilter implements Filter {
 
     /**
@@ -54,4 +57,13 @@ public class CharacterEncodingFilter implements Filter {
         filterChain.doFilter(request, response);
     }
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        log.info("Character Encoding Filter created...");
+    }
+
+    @Override
+    public void destroy() {
+        log.info("Character Encoding Filter destroyed...");
+    }
 }

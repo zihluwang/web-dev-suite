@@ -1,10 +1,10 @@
 package cn.vorbote.web.filter;
 
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -167,11 +167,11 @@ public class CorsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("CorsFilter initialized...");
+        log.info("Cors Filter initialized...");
     }
 
     @Override
     public void destroy() {
-        log.info("CorsFilter destroyed...");
+        log.info("Cors Filter destroyed...");
     }
 }
