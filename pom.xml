@@ -34,8 +34,8 @@
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
 
         <!--由cn.vorbote开发的依赖-->
-        <project.version>3.3.1.jakarta</project.version>
-        <web.dev.version>3.3.1</web.dev.version>
+        <project.version>3.3.2.jakarta</project.version>
+        <web.dev.version>3.3.2</web.dev.version>
     </properties>
 
     <parent>
