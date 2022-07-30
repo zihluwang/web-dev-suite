@@ -183,7 +183,7 @@ public class CorsFilter implements Filter {
             return;
         }
 
-        // 已经更改完成，请求被放行
+        // CORS Response Header has been added properly.
         chain.doFilter(request, response);
     }
 
