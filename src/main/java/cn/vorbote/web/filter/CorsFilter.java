@@ -189,7 +189,7 @@ public class CorsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("CorsFilter initialized...");
+        log.info("CorsFilter initializing...");
 
         // set the property - allow credentials
         log.debug("Initializing property [allowCredentials]");
