@@ -6,6 +6,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * CORS Filter. You can easily handle CORS issues in your web application development by setting this CorsFilter to an
@@ -16,33 +19,38 @@ import java.io.IOException;
 @Slf4j
 public class CorsFilter implements Filter {
 
+    private final static String REGEX_URL = "(https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()!@:%_+.~#?&/=]*))|(\\*)|(null)";
+
+    private final static List<String> ALL_METHODS = Arrays.asList("GET", "HEAD", "POST", "PUT",
+            "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH");
+
     /**
      * According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials"
      * >MDN Docs</a>, this tells browsers whether to expose the response to the frontend JavaScript code when
      * the request's credentials mode ({@code Request.credentials}) is included.
      */
-    private final boolean allowCredentials;
+    private boolean allowCredentials;
 
     /**
      * According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin"
      * >MDN Docs</a>, this response header indicates whether the response can be shared with requesting code from the
      * given origin.
      */
-    private final String[] allowOrigin;
+    private String[] allowOrigin;
 
     /**
      * According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers"
      * >MDN Docs</a>, this response header is used in response to a preflight request which includes the
      * {@code Access-Control-Request-Headers} to indicate which HTTP headers can be used during the actual request.
      */
-    private final String[] allowHeaders;
+    private String[] allowHeaders;
 
     /**
      * According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods"
      * >MDN Docs</a>, this response header specifies one or more methods allowed when accessing a resource in response
      * to a preflight request.
      */
-    private final String[] allowMethods;
+    private String[] allowMethods;
 
     /**
      * According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers"
@@ -52,7 +60,7 @@ public class CorsFilter implements Filter {
      * >CORS-safelisted</a> response headers are exposed by default. For clients to be able to access other headers,
      * the server must list them using the Access-Control-Expose-Headers header.
      */
-    private final String[] exposeHeaders;
+    private String[] exposeHeaders;
 
     /**
      * Generate a DIY cors filter.
@@ -146,16 +154,30 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        String allowedOrigin = "";
+        if (allowOrigin.length > 1) {
+            String origin = Optional.ofNullable(request.getHeader("Origin")).orElse("");
+            if (Arrays.stream(allowOrigin).anyMatch((item) -> item.equalsIgnoreCase(origin))) {
+                allowedOrigin = origin;
+            }
+        } else if (allowOrigin.length == 1) {
+            allowedOrigin = allowOrigin[0];
+        }
+
         // Handle CORS problem.
         response.addHeader("Access-Control-Allow-Credentials", String.valueOf(isAllowCredentials()));
-        response.addHeader("Access-Control-Allow-Origin", fromArray(getAllowOrigin()));
+        response.addHeader("Access-Control-Allow-Origin", allowedOrigin);
         response.addHeader("Access-Control-Allow-Methods", fromArray(getAllowMethods()));
         response.addHeader("Access-Control-Allow-Headers", fromArray(getAllowHeaders()));
 
         // Set exposed response headers
         response.addHeader("Access-Control-Expose-Headers", fromArray(getExposeHeaders()));
 
-        // 所有xhr发送的请求会同时发送OPTIONS请求，因此拦截所有OPTIONS请求
+        if ("*".equalsIgnoreCase(allowedOrigin) || "null".equalsIgnoreCase(allowedOrigin)) {
+            response.addHeader("Vary", "Origin");
+        }
+
+        // all xhr requests will send a options request at first, therefore intercept all options requests.
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
             // log.info("User-Agent: {}", req.getHeader("User-Agent"));
             return;
@@ -168,6 +190,61 @@ public class CorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("CorsFilter initialized...");
+
+        // set the property - allow credentials
+        log.debug("Initializing property [allowCredentials]");
+        this.allowCredentials = Optional.ofNullable(filterConfig.getInitParameter("allowCredentials"))
+                .map(Boolean::valueOf)
+                .orElse(false);
+        log.debug("Property [allowCredentials] initialized, value has been set to [{}]", allowCredentials);
+
+        // set the property - allow origin
+        log.debug("Initializing property [allowOrigin]");
+        String[] tmpAllowOrigin = Optional.ofNullable(filterConfig.getInitParameter("allowOrigin"))
+                .map((value) -> value.split(",( )?"))
+                .orElse(new String[]{});
+
+        if (Arrays.stream(tmpAllowOrigin).allMatch((item) -> {
+            boolean checkResult = item.matches(REGEX_URL);
+            if (!checkResult) {
+                log.error("Origin [{}] does not like a web url, consider remove it?", item);
+            }
+            return checkResult;
+        })) {
+            allowOrigin = tmpAllowOrigin;
+        }
+        log.debug("Property [allowOrigin] initialized, value has been set to {}", Arrays.toString(allowOrigin));
+
+        // set the property - allow headers
+        log.debug("Initializing property [allowHeaders]");
+        allowHeaders = Optional.ofNullable(filterConfig.getInitParameter("allowHeaders"))
+                .map((value) -> value.split(",( )?"))
+                .orElse(new String[]{});
+        log.debug("Property [allowHeaders] initialized, value has been set to {}", Arrays.toString(allowHeaders));
+
+        // set the property - allow methods
+        log.debug("Initializing property [allowMethods]");
+        String[] tmpAllowMethods = Optional.ofNullable(filterConfig.getInitParameter("allowMethods"))
+                .map((value) -> value.split(",( )?"))
+                .orElse(new String[]{});
+
+        if (Arrays.stream(tmpAllowMethods).allMatch((item) -> {
+            boolean checkResult = ALL_METHODS.contains(item.toUpperCase());
+            if (!checkResult) {
+                log.error("Method [{}] does not like a web request method, consider remove it?", item);
+            }
+            return checkResult;
+        })) {
+            this.allowMethods = tmpAllowMethods;
+        }
+        log.debug("Property [allowMethods] initialized, value has been set to {}", Arrays.toString(allowMethods));
+
+        // set the property - expose headers
+        log.debug("Initializing property [exposeHeaders]");
+        this.exposeHeaders = Optional.ofNullable(filterConfig.getInitParameter("exposeHeaders"))
+                .map((value) -> value.split(",( )?"))
+                .orElse(new String[]{});
+        log.debug("Property [exposeHeaders] initialized, value has been set to {}", Arrays.toString(exposeHeaders));
     }
 
     @Override
