@@ -33,9 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
 
-        <!--由cn.vorbote开发的依赖-->
-        <project.version>3.3.2.jakarta</project.version>
-        <web.dev.version>3.3.2</web.dev.version>
+        <web.dev.version>3.4.0</web.dev.version>
     </properties>
 
     <parent>
@@ -46,7 +44,7 @@
 
     <groupId>cn.vorbote</groupId>
     <artifactId>web-dev-suite</artifactId>
-    <version>${project.version}</version>
+    <version>3.4.0.jakarta</version>
     <url>https://plugins.vorbote.cn/</url>
 
     <name>VorBotE :: Web Development Suite</name>
@@ -65,6 +63,7 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

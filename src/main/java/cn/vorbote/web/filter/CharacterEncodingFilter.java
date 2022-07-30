@@ -37,6 +37,10 @@ public class CharacterEncodingFilter implements Filter {
         this.responseEncoding = responseEncoding;
     }
 
+    public CharacterEncodingFilter() {
+        this("UTF-8", "UTF-8");
+    }
+
     /**
      * Convert encoding for request and response.
      *
