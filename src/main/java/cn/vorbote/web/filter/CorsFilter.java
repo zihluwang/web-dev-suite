@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
@@ -174,7 +173,7 @@ public class CorsFilter implements Filter {
         // Set exposed response headers
         response.addHeader("Access-Control-Expose-Headers", fromArray(getExposeHeaders()));
 
-        if ("*".equalsIgnoreCase(allowedOrigin) || "null".equalsIgnoreCase(allowedOrigin)) {
+        if (!("*".equalsIgnoreCase(allowedOrigin) || "null".equalsIgnoreCase(allowedOrigin))) {
             response.addHeader("Vary", "Origin");
         }
 
