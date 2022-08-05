@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
@@ -191,60 +192,65 @@ public class CorsFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("CorsFilter initializing...");
 
-        // set the property - allow credentials
-        log.debug("Initializing property [allowCredentials]");
-        this.allowCredentials = Optional.ofNullable(filterConfig.getInitParameter("allowCredentials"))
-                .map(Boolean::valueOf)
-                .orElse(false);
-        log.debug("Property [allowCredentials] initialized, value has been set to [{}]", allowCredentials);
+        if (filterConfig.getInitParameterNames().hasMoreElements()) {
+            log.debug("Detected config is from web.xml file, using filterConfig to deploy.");
+            // set the property - allow credentials
+            log.debug("Initializing property [allowCredentials]");
+            this.allowCredentials = Optional.ofNullable(filterConfig.getInitParameter("allowCredentials"))
+                    .map(Boolean::valueOf)
+                    .orElse(false);
+            log.debug("Property [allowCredentials] initialized, value has been set to [{}]", allowCredentials);
 
-        // set the property - allow origin
-        log.debug("Initializing property [allowOrigin]");
-        String[] tmpAllowOrigin = Optional.ofNullable(filterConfig.getInitParameter("allowOrigin"))
-                .map((value) -> value.split(",( )?"))
-                .orElse(new String[]{});
+            // set the property - allow origin
+            log.debug("Initializing property [allowOrigin]");
+            String[] tmpAllowOrigin = Optional.ofNullable(filterConfig.getInitParameter("allowOrigin"))
+                    .map((value) -> value.split(",( )?"))
+                    .orElse(new String[]{});
 
-        if (Arrays.stream(tmpAllowOrigin).allMatch((item) -> {
-            boolean checkResult = item.matches(REGEX_URL);
-            if (!checkResult) {
-                log.error("Origin [{}] does not like a web url, consider remove it?", item);
+            if (Arrays.stream(tmpAllowOrigin).allMatch((item) -> {
+                boolean checkResult = item.matches(REGEX_URL);
+                if (!checkResult) {
+                    log.error("Origin [{}] does not like a web url, consider remove it?", item);
+                }
+                return checkResult;
+            })) {
+                allowOrigin = tmpAllowOrigin;
             }
-            return checkResult;
-        })) {
-            allowOrigin = tmpAllowOrigin;
-        }
-        log.debug("Property [allowOrigin] initialized, value has been set to {}", Arrays.toString(allowOrigin));
+            log.debug("Property [allowOrigin] initialized, value has been set to {}", Arrays.toString(allowOrigin));
 
-        // set the property - allow headers
-        log.debug("Initializing property [allowHeaders]");
-        allowHeaders = Optional.ofNullable(filterConfig.getInitParameter("allowHeaders"))
-                .map((value) -> value.split(",( )?"))
-                .orElse(new String[]{});
-        log.debug("Property [allowHeaders] initialized, value has been set to {}", Arrays.toString(allowHeaders));
+            // set the property - allow headers
+            log.debug("Initializing property [allowHeaders]");
+            allowHeaders = Optional.ofNullable(filterConfig.getInitParameter("allowHeaders"))
+                    .map((value) -> value.split(",( )?"))
+                    .orElse(new String[]{});
+            log.debug("Property [allowHeaders] initialized, value has been set to {}", Arrays.toString(allowHeaders));
 
-        // set the property - allow methods
-        log.debug("Initializing property [allowMethods]");
-        String[] tmpAllowMethods = Optional.ofNullable(filterConfig.getInitParameter("allowMethods"))
-                .map((value) -> value.split(",( )?"))
-                .orElse(new String[]{});
+            // set the property - allow methods
+            log.debug("Initializing property [allowMethods]");
+            String[] tmpAllowMethods = Optional.ofNullable(filterConfig.getInitParameter("allowMethods"))
+                    .map((value) -> value.split(",( )?"))
+                    .orElse(new String[]{});
 
-        if (Arrays.stream(tmpAllowMethods).allMatch((item) -> {
-            boolean checkResult = ALL_METHODS.contains(item.toUpperCase());
-            if (!checkResult) {
-                log.error("Method [{}] does not like a web request method, consider remove it?", item);
+            if (Arrays.stream(tmpAllowMethods).allMatch((item) -> {
+                boolean checkResult = ALL_METHODS.contains(item.toUpperCase());
+                if (!checkResult) {
+                    log.error("Method [{}] does not like a web request method, consider remove it?", item);
+                }
+                return checkResult;
+            })) {
+                this.allowMethods = tmpAllowMethods;
             }
-            return checkResult;
-        })) {
-            this.allowMethods = tmpAllowMethods;
-        }
-        log.debug("Property [allowMethods] initialized, value has been set to {}", Arrays.toString(allowMethods));
+            log.debug("Property [allowMethods] initialized, value has been set to {}", Arrays.toString(allowMethods));
 
-        // set the property - expose headers
-        log.debug("Initializing property [exposeHeaders]");
-        this.exposeHeaders = Optional.ofNullable(filterConfig.getInitParameter("exposeHeaders"))
-                .map((value) -> value.split(",( )?"))
-                .orElse(new String[]{});
-        log.debug("Property [exposeHeaders] initialized, value has been set to {}", Arrays.toString(exposeHeaders));
+            // set the property - expose headers
+            log.debug("Initializing property [exposeHeaders]");
+            this.exposeHeaders = Optional.ofNullable(filterConfig.getInitParameter("exposeHeaders"))
+                    .map((value) -> value.split(",( )?"))
+                    .orElse(new String[]{});
+            log.debug("Property [exposeHeaders] initialized, value has been set to {}", Arrays.toString(exposeHeaders));
+        } else {
+            log.debug("Detected config is from Spring, using application.(yml)/(properties) to deploy.");
+        }
     }
 
     @Override
